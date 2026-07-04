@@ -5,7 +5,6 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
-
 import lombok.*;
 import org.hibernate.annotations.Check;
 import org.hibernate.annotations.UuidGenerator;
@@ -20,10 +19,7 @@ import org.hibernate.annotations.UuidGenerator;
 @Check(constraints = "end_date > start_date")
 public class JCourse {
 
-  @Id
-  @GeneratedValue
-  @UuidGenerator
-  private UUID id;
+  @Id @GeneratedValue @UuidGenerator private UUID id;
 
   @ManyToMany(mappedBy = "courses")
   private Set<JUser> users = new HashSet<>();
