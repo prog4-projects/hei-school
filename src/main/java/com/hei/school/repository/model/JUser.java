@@ -2,7 +2,6 @@ package com.hei.school.repository.model;
 
 import jakarta.persistence.*;
 import java.util.UUID;
-
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
@@ -15,10 +14,7 @@ import org.hibernate.annotations.UuidGenerator;
 @Builder
 public class JUser {
 
-  @Id
-  @GeneratedValue
-  @UuidGenerator
-  private UUID id;
+  @Id @GeneratedValue @UuidGenerator private UUID id;
 
   @Column(nullable = false)
   private String firstName;
