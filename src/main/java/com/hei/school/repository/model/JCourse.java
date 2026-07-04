@@ -2,6 +2,8 @@ package com.hei.school.repository.model;
 
 import jakarta.persistence.*;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,4 +26,7 @@ public class JCourse {
   @Column private Instant startDate;
 
   @Column private Instant endDate;
+
+  @ManyToMany(mappedBy = "courses")
+  private Set<JUser> users = new HashSet<>();
 }

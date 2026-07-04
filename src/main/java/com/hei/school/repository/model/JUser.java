@@ -1,6 +1,8 @@
 package com.hei.school.repository.model;
 
 import jakarta.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,4 +23,11 @@ public class JUser {
   @Column private String lastName;
   @Column private String userName;
   @Column private String email;
+
+  @ManyToMany
+  @JoinTable(
+      name = "enrollments",
+      joinColumns = @JoinColumn(name = "user_id"),
+      inverseJoinColumns = @JoinColumn(name = "course_id"))
+  private Set<JCourse> courses = new HashSet<>();
 }
