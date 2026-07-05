@@ -1,6 +1,6 @@
 package com.hei.school.service;
 
-import com.hei.school.event.EnrollmentCreatedEvent;
+import com.hei.school.enrollment.event.EnrollmentCreatedEvent;
 import com.hei.school.repository.EnrollmentRepository;
 import com.hei.school.repository.model.JEnrollment;
 import java.time.Instant;
