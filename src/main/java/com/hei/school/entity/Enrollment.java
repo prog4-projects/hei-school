@@ -10,8 +10,8 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class Enrollment {
-    private UUID id;
-    private UUID userId;
-    private UUID courseId;
-    private Instant enrolledAt;
+  private UUID id;
+  private UUID userId;
+  private UUID courseId;
+  private Instant enrolledAt;
 }

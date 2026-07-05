@@ -8,9 +8,8 @@ import org.hibernate.annotations.UuidGenerator;
 
 @Entity
 @Table(
-        name = "enrollments",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "course_id"})
-)
+    name = "enrollments",
+    uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "course_id"}))
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,17 +17,14 @@ import org.hibernate.annotations.UuidGenerator;
 @Builder
 public class JEnrollment {
 
-    @Id
-    @GeneratedValue
-    @UuidGenerator
-    private UUID id;
+  @Id @GeneratedValue @UuidGenerator private UUID id;
 
-    @Column(name = "user_id", nullable = false)
-    private UUID userId;
+  @Column(name = "user_id", nullable = false)
+  private UUID userId;
 
-    @Column(name = "course_id", nullable = false)
-    private UUID courseId;
+  @Column(name = "course_id", nullable = false)
+  private UUID courseId;
 
-    @Column(name = "enrolled_at", nullable = false)
-    private Instant enrolledAt;
+  @Column(name = "enrolled_at", nullable = false)
+  private Instant enrolledAt;
 }
