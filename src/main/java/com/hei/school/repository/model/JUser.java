@@ -1,6 +1,8 @@
 package com.hei.school.repository.model;
 
 import jakarta.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
@@ -27,4 +29,5 @@ public class JUser {
 
   @Column(nullable = false, unique = true)
   private String email;
+
 }
