@@ -2,15 +2,13 @@ package com.hei.school.repository.model;
 
 import jakarta.persistence.*;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 import lombok.*;
 import org.hibernate.annotations.Check;
 import org.hibernate.annotations.UuidGenerator;
 
 @Entity
-@Table(name = "courses")
+@Table(name = "course")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -29,5 +27,4 @@ public class JCourse {
 
   @Column(name = "end_date", nullable = false)
   private Instant endDate;
-
 }
