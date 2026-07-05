@@ -36,7 +36,9 @@ public class MailboxEventHandler implements RequestHandler<SQSEvent, String> {
     renameWorkerThread(currentThread());
     log.info("Received: event={}, awsReqId={}", event, context.getAwsRequestId());
     List<SQSMessage> messages = event.getRecords();
-    consumableEventTyper.apply(messages).forEach(ConsumableEvent::newRandomVisibilityTimeout);
+    consumableEventTyper
+        .apply(messages)
+        .forEach(ConsumableEvent::newRandomVisibilityTimeout); // note(init-visibility)
     log.info("SQS messages: {}", messages);
 
     var applicationContext = applicationContext();
