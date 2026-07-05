@@ -8,7 +8,7 @@ import org.hibernate.annotations.UuidGenerator;
 
 @Entity
 @Table(
-    name = "enrollments",
+    name = "enrollment",
     uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "course_id"}))
 @Getter
 @Setter

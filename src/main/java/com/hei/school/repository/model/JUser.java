@@ -8,7 +8,7 @@ import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
 @Entity
-@Table(name = "users")
+@Table(name = "\"user\"")
 @Getter
 @Setter
 @NoArgsConstructor
