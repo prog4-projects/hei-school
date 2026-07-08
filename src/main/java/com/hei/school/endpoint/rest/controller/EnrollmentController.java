@@ -14,7 +14,7 @@ public class EnrollmentController {
 
   private final EnrollmentService enrollmentService;
 
-  @PostMapping("/{userId}/courses/{courseId}/enroll")
+  @PostMapping("/users/{userId}/enrollments/{courseId}")
   public ResponseEntity<Void> enroll(@PathVariable UUID userId, @PathVariable UUID courseId) {
     enrollmentService.enroll(userId, courseId);
     return ResponseEntity.status(HttpStatus.CREATED).build();
