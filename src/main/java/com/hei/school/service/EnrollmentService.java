@@ -1,7 +1,9 @@
 package com.hei.school.service;
 
 import com.hei.school.enrollment.event.EnrollmentCreatedEvent;
+import com.hei.school.repository.CourseRepository;
 import com.hei.school.repository.EnrollmentRepository;
+import com.hei.school.repository.UserRepository;
 import com.hei.school.repository.model.JEnrollment;
 import java.time.Instant;
 import java.util.UUID;
@@ -14,21 +16,39 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class EnrollmentService {
 
-  private final EnrollmentRepository enrollmentRepository;
+  private final UserRepository userRepository;
+  private final CourseRepository courseRepository;
   private final ApplicationEventPublisher eventPublisher;
+  private final EnrollmentRepository enrollmentRepository;
 
   @Transactional
   public void enroll(UUID userId, UUID courseId) {
+
+    var user =
+        userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+
+    var course =
+        courseRepository
+            .findById(courseId)
+            .orElseThrow(() -> new RuntimeException("Course not found"));
+
+    if (course.getEndDate().isBefore(Instant.now())) {
+      throw new RuntimeException("Course already finished");
+    }
 
     if (enrollmentRepository.existsByUserIdAndCourseId(userId, courseId)) {
       throw new RuntimeException("User already enrolled");
     }
 
     JEnrollment enrollment =
-        JEnrollment.builder().userId(userId).courseId(courseId).enrolledAt(Instant.now()).build();
+        JEnrollment.builder()
+            .userId(user.getId())
+            .courseId(course.getId())
+            .enrolledAt(Instant.now())
+            .build();
 
     enrollmentRepository.save(enrollment);
 
-    eventPublisher.publishEvent(new EnrollmentCreatedEvent(userId, courseId));
+    eventPublisher.publishEvent(new EnrollmentCreatedEvent(user.getId(), course.getId()));
   }
 }
