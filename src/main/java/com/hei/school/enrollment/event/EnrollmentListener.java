@@ -25,6 +25,8 @@ public class EnrollmentListener {
   @SneakyThrows
   public void handle(EnrollmentCreatedEvent event) {
 
+    System.out.println("EVENT RECEIVED FOR EMAIL : " + event.email());
+
     Email email =
         new Email(
             new InternetAddress(event.email()),
