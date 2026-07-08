@@ -2,10 +2,10 @@ package com.hei.school.conf;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import com.hei.school.enrollment.event.EnrollmentCreatedEvent;
+import com.hei.school.exception.UserAlreadyEnrolledException;
 import com.hei.school.repository.CourseRepository;
 import com.hei.school.repository.EnrollmentRepository;
 import com.hei.school.repository.UserRepository;
@@ -44,10 +44,10 @@ class EnrollmentServiceTest {
     JUser user =
         JUser.builder()
             .id(userId)
-            .firstName("Heri")
+            .firstName("Njaka")
             .lastName("Test")
-            .email("heri@test.com")
-            .userName("heri")
+            .email("Njaka@test.com")
+            .userName("Njaka")
             .build();
 
     JCourse course =
@@ -77,8 +77,34 @@ class EnrollmentServiceTest {
     UUID userId = UUID.randomUUID();
     UUID courseId = UUID.randomUUID();
 
+    JUser user =
+        JUser.builder()
+            .id(userId)
+            .firstName("Njaka")
+            .lastName("Test")
+            .email("Njaka@test.com")
+            .userName("Njaka")
+            .build();
+
+    JCourse course =
+        JCourse.builder()
+            .id(courseId)
+            .title("Spring Boot")
+            .startDate(Instant.now())
+            .endDate(Instant.now().plusSeconds(3600))
+            .build();
+
+    when(userRepository.findById(userId)).thenReturn(java.util.Optional.of(user));
+
+    when(courseRepository.findById(courseId)).thenReturn(java.util.Optional.of(course));
+
     when(enrollmentRepository.existsByUserIdAndCourseId(userId, courseId)).thenReturn(true);
 
-    assertThrows(RuntimeException.class, () -> enrollmentService.enroll(userId, courseId));
+    assertThrows(
+        UserAlreadyEnrolledException.class, () -> enrollmentService.enroll(userId, courseId));
+
+    verify(enrollmentRepository, never()).save(any());
+
+    verify(eventPublisher, never()).publishEvent(any());
   }
 }
