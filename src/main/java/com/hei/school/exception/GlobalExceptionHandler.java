@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -30,5 +31,24 @@ public class GlobalExceptionHandler {
     body.put("status", 500);
 
     return ResponseEntity.status(500).body(body);
+  }
+
+  @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+  public ResponseEntity<Map<String, Object>> handleTypeMismatch(
+          MethodArgumentTypeMismatchException ex) {
+
+    Map<String, Object> body = new HashMap<>();
+
+    String message =
+            "Invalid value for parameter '"
+                    + ex.getName()
+                    + "'. Expected type: "
+                    + ex.getRequiredType().getSimpleName();
+
+    body.put("timestamp", Instant.now());
+    body.put("message", message);
+    body.put("status", 400);
+
+    return ResponseEntity.badRequest().body(body);
   }
 }
