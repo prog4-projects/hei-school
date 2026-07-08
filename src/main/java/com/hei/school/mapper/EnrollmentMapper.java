@@ -7,21 +7,21 @@ import org.springframework.stereotype.Component;
 @Component
 public class EnrollmentMapper {
 
-    public Enrollment toDomain(JEnrollment jEnrollment) {
-        return Enrollment.builder()
-                .id(jEnrollment.getId())
-                .userId(jEnrollment.getUserId())
-                .courseId(jEnrollment.getCourseId())
-                .enrolledAt(jEnrollment.getEnrolledAt())
-                .build();
-    }
+  public Enrollment toDomain(JEnrollment jEnrollment) {
+    return Enrollment.builder()
+        .id(jEnrollment.getId())
+        .userId(jEnrollment.getUserId())
+        .courseId(jEnrollment.getCourseId())
+        .enrolledAt(jEnrollment.getEnrolledAt())
+        .build();
+  }
 
-    public JEnrollment toEntity(Enrollment enrollment) {
-        return JEnrollment.builder()
-                .id(enrollment.getId())
-                .userId(enrollment.getUserId())
-                .courseId(enrollment.getCourseId())
-                .enrolledAt(enrollment.getEnrolledAt())
-                .build();
-    }
+  public JEnrollment toEntity(Enrollment enrollment) {
+    return JEnrollment.builder()
+        .id(enrollment.getId())
+        .userId(enrollment.getUserId())
+        .courseId(enrollment.getCourseId())
+        .enrolledAt(enrollment.getEnrolledAt())
+        .build();
+  }
 }

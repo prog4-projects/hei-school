@@ -1,6 +1,10 @@
 package com.hei.school.service;
 
 import com.hei.school.enrollment.event.EnrollmentCreatedEvent;
+import com.hei.school.exception.CourseAlreadyFinishedException;
+import com.hei.school.exception.CourseNotFoundException;
+import com.hei.school.exception.UserAlreadyEnrolledException;
+import com.hei.school.exception.UserNotFoundException;
 import com.hei.school.repository.CourseRepository;
 import com.hei.school.repository.EnrollmentRepository;
 import com.hei.school.repository.UserRepository;
@@ -24,20 +28,16 @@ public class EnrollmentService {
   @Transactional
   public void enroll(UUID userId, UUID courseId) {
 
-    var user =
-        userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+    var user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
 
-    var course =
-        courseRepository
-            .findById(courseId)
-            .orElseThrow(() -> new RuntimeException("Course not found"));
+    var course = courseRepository.findById(courseId).orElseThrow(CourseNotFoundException::new);
 
     if (course.getEndDate().isBefore(Instant.now())) {
-      throw new RuntimeException("Course already finished");
+      throw new CourseAlreadyFinishedException();
     }
 
     if (enrollmentRepository.existsByUserIdAndCourseId(userId, courseId)) {
-      throw new RuntimeException("User already enrolled");
+      throw new UserAlreadyEnrolledException();
     }
 
     JEnrollment enrollment =
