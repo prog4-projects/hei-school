@@ -2,31 +2,29 @@ package com.hei.school.repository.model;
 
 import jakarta.persistence.*;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Check;
 import org.hibernate.annotations.UuidGenerator;
 
 @Entity
-@Table(name = "Course")
-@AllArgsConstructor
+@Table(name = "course")
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-@Data
 @Check(constraints = "end_date > start_date")
 public class JCourse {
+
   @Id @GeneratedValue @UuidGenerator private UUID id;
 
-  @Column private String title;
-  @Column private Instant startDate;
+  @Column(nullable = false)
+  private String title;
 
-  @Column private Instant endDate;
+  @Column(name = "start_date", nullable = false)
+  private Instant startDate;
 
-  @ManyToMany(mappedBy = "courses")
-  private Set<JUser> users = new HashSet<>();
+  @Column(name = "end_date", nullable = false)
+  private Instant endDate;
 }
