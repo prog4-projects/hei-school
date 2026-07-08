@@ -5,7 +5,6 @@ import com.hei.school.mail.Mailer;
 import com.hei.school.repository.CourseRepository;
 import com.hei.school.repository.UserRepository;
 import jakarta.mail.internet.InternetAddress;
-import java.io.File;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -26,18 +25,14 @@ public class EnrollmentListener {
   @SneakyThrows
   public void handle(EnrollmentCreatedEvent event) {
 
-    var user = userRepository.findById(event.userId()).orElseThrow();
-
-    var course = courseRepository.findById(event.courseId()).orElseThrow();
-
-    var email =
+    Email email =
         new Email(
-            new InternetAddress(user.getEmail()),
-            List.<InternetAddress>of(),
-            List.<InternetAddress>of(),
-            "Inscription confirmed",
-            "You have been registered for : " + course.getTitle(),
-            List.<File>of());
+            new InternetAddress(event.email()),
+            List.of(),
+            List.of(),
+            "Inscription confirmée",
+            "Bonjour " + event.firstName() + ", vous êtes inscrit au cours " + event.courseTitle(),
+            List.of());
 
     mailer.accept(email);
   }

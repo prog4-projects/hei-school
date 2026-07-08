@@ -3,6 +3,7 @@ package com.hei.school.endpoint.rest.controller;
 import com.hei.school.service.EnrollmentService;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,6 @@ public class EnrollmentController {
   @PostMapping("/{userId}/courses/{courseId}/enroll")
   public ResponseEntity<Void> enroll(@PathVariable UUID userId, @PathVariable UUID courseId) {
     enrollmentService.enroll(userId, courseId);
-    return ResponseEntity.ok().build();
+    return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 }

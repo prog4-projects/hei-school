@@ -49,6 +49,7 @@ public class EnrollmentService {
 
     enrollmentRepository.save(enrollment);
 
-    eventPublisher.publishEvent(new EnrollmentCreatedEvent(user.getId(), course.getId()));
+    eventPublisher.publishEvent(
+        new EnrollmentCreatedEvent(user.getFirstName(), course.getTitle(), user.getEmail()));
   }
 }
