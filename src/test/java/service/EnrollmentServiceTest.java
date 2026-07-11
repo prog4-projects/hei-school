@@ -1,4 +1,4 @@
-package com.hei.school.conf;
+package service;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
