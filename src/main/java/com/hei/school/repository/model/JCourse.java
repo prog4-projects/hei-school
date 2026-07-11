@@ -2,6 +2,8 @@ package com.hei.school.repository.model;
 
 import jakarta.persistence.*;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 import lombok.*;
 import org.hibernate.annotations.Check;
@@ -21,6 +23,7 @@ public class JCourse {
 
   @ManyToMany(mappedBy = "courses")
   private Set<JUser> users = new HashSet<>();
+
   @Column(nullable = false)
   private String title;
 
