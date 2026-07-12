@@ -1,6 +1,7 @@
 package com.hei.school.service;
 
-import com.hei.school.enrollment.event.EnrollmentCreatedEvent;
+import com.hei.school.endpoint.event.EventProducer;
+import com.hei.school.endpoint.event.model.SendEmailRequested;
 import com.hei.school.exception.CourseAlreadyFinishedException;
 import com.hei.school.exception.CourseNotFoundException;
 import com.hei.school.exception.UserAlreadyEnrolledException;
@@ -10,9 +11,9 @@ import com.hei.school.repository.EnrollmentRepository;
 import com.hei.school.repository.UserRepository;
 import com.hei.school.repository.model.JEnrollment;
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,8 +23,8 @@ public class EnrollmentService {
 
   private final UserRepository userRepository;
   private final CourseRepository courseRepository;
-  private final ApplicationEventPublisher eventPublisher;
   private final EnrollmentRepository enrollmentRepository;
+  private final EventProducer<SendEmailRequested> eventProducer;
 
   @Transactional
   public void enroll(UUID userId, UUID courseId) {
@@ -49,7 +50,7 @@ public class EnrollmentService {
 
     enrollmentRepository.save(enrollment);
 
-    eventPublisher.publishEvent(
-        new EnrollmentCreatedEvent(user.getFirstName(), course.getTitle(), user.getEmail()));
+    var event = List.of(new SendEmailRequested(userId, courseId));
+    eventProducer.accept(event);
   }
 }
