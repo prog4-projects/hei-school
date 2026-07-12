@@ -157,6 +157,10 @@ implementation 'org.flywaydb:flyway-core:9.22.0'
 runtimeOnly 'org.postgresql:postgresql:42.7.4'
 implementation 'org.eclipse.angus:angus-mail:2.0.2'
 implementation 'org.eclipse.angus:angus-activation:2.0.2'
+testImplementation 'org.testcontainers:testcontainers-junit-jupiter:2.0.2'
+testImplementation 'org.testcontainers:testcontainers-postgresql:2.0.2'
+testImplementation 'org.springframework.boot:spring-boot-starter-test:3.2.2'
+testImplementation 'org.junit-pioneer:junit-pioneer:2.2.0
 
 
 }

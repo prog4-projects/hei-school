@@ -41,8 +41,3 @@ out/
 
 ### Mac OS ###
 .DS_Store
-
-### Envs
-.env
-.env.local
-.env.production
